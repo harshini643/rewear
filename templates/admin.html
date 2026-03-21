@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Admin Panel</h2>
+
+<h4>Pending Items</h4>
+<div class="row">
+    {% for item in pending_items %}
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <img src="{{ url_for('static', filename='images/uploads/' + item['image']) }}" class="card-img-top item-img" alt="">
+            <div class="card-body">
+                <h5>{{ item['title'] }}</h5>
+                <p>Owner: {{ item['owner_name'] }}</p>
+                <p>{{ item['category'] }} | {{ item['type'] }} | {{ item['size'] }}</p>
+                <a href="{{ url_for('approve_item', item_id=item['id']) }}" class="btn btn-success btn-sm">Approve</a>
+                <a href="{{ url_for('reject_item', item_id=item['id']) }}" class="btn btn-danger btn-sm">Reject</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No pending items.</p>
+    {% endfor %}
+</div>
+
+<hr>
+
+<h4>Approved Items</h4>
+<div class="row">
+    {% for item in approved_items %}
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <img src="{{ url_for('static', filename='images/uploads/' + item['image']) }}" class="card-img-top item-img" alt="">
+            <div class="card-body">
+                <h5>{{ item['title'] }}</h5>
+                <p>Owner: {{ item['owner_name'] }}</p>
+                <p>Status: {{ item['status'] }}</p>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No approved items.</p>
+    {% endfor %}
+</div>
+{% endblock %}
