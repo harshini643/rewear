@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="mb-4">List a New Item</h3>
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label>Title</label>
+                        <input type="text" name="title" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control" rows="4" required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Category</label>
+                            <select name="category" class="form-control" required>
+                                <option value="">Select</option>
+                                <option>Men</option>
+                                <option>Women</option>
+                                <option>Kids</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Type</label>
+                            <input type="text" name="type" class="form-control" placeholder="Shirt / Jeans / Top / Dress" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label>Size</label>
+                            <select name="size" class="form-control" required>
+                                <option value="">Select</option>
+                                <option>S</option>
+                                <option>M</option>
+                                <option>L</option>
+                                <option>XL</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Condition</label>
+                            <select name="condition" class="form-control" required>
+                                <option value="">Select</option>
+                                <option>New</option>
+                                <option>Like New</option>
+                                <option>Good</option>
+                                <option>Used</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Points</label>
+                            <input type="number" name="points" class="form-control" min="10" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Tags</label>
+                        <input type="text" name="tags" class="form-control" placeholder="casual, cotton, blue" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Upload Image</label>
+                        <input type="file" name="image" class="form-control" accept=".jpg,.jpeg,.png,.gif">
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Submit for Approval</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

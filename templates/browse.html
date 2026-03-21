@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Browse Items</h2>
+
+<form method="GET" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <input type="text" name="category" class="form-control" placeholder="Category">
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="type" class="form-control" placeholder="Type">
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="size" class="form-control" placeholder="Size">
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-dark w-100">Filter</button>
+    </div>
+</form>
+
+<div class="row">
+    {% for item in items %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <img src="{{ url_for('static', filename='images/uploads/' + item['image']) }}" class="card-img-top item-img" alt="">
+            <div class="card-body">
+                <h5 class="card-title">{{ item['title'] }}</h5>
+                <p class="card-text">{{ item['category'] }} | {{ item['type'] }} | Size {{ item['size'] }}</p>
+                <p>Condition: {{ item['condition'] }}</p>
+                <p>Owner: {{ item['owner_name'] }}</p>
+                <p><strong>{{ item['points'] }} points</strong></p>
+                <a href="{{ url_for('item_detail', item_id=item['id']) }}" class="btn btn-outline-primary">View Item</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No items found.</p>
+    {% endfor %}
+</div>
+{% endblock %}
