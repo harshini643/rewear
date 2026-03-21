@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+
+                <h3 class="mb-4 text-center">Signup</h3>
+
+                <form method="POST" id="signupForm">
+
+                    <div class="mb-3">
+                        <label>Name</label>
+                        <input type="text" name="name" id="signupName" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" name="email" id="signupEmail" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input type="password" name="password" id="signupPassword" class="form-control" required>
+                    </div>
+
+                    <p id="signupError" class="text-danger"></p>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        Create Account
+                    </button>
+
+                </form>
+
+                <!-- LOGIN REDIRECT -->
+                <div class="text-center mt-3">
+                    <p class="mb-0">
+                        Already have an account?
+                        <a href="{{ url_for('login') }}" class="text-primary fw-bold">
+                            Login
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Fade Effect -->
+<script>
+$(document).ready(function () {
+    $(".card").hide().fadeIn(800);
+});
+</script>
+
+<!-- Validation -->
+<script>
+$("#signupForm").submit(function () {
+
+    let name = $("#signupName").val().trim();
+    let email = $("#signupEmail").val().trim();
+    let password = $("#signupPassword").val().trim();
+
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
+
+    $("#signupError").text("");
+
+    if (name === "" || email === "" || password === "") {
+        $("#signupError").text("All fields are required");
+        return false;
+    }
+
+    if (!email.match(emailPattern)) {
+        $("#signupError").text("Enter valid email");
+        return false;
+    }
+
+    if (!password.match(passwordPattern)) {
+        $("#signupError").text("Password must contain uppercase, lowercase, number and 8 characters");
+        return false;
+    }
+
+    return true;
+});
+</script>
+
+{% endblock %}
