@@ -1,0 +1,91 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.item-img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.navbar-brand {
+    letter-spacing: 1px;
+    font-size: 1.4rem;
+}
+
+.btn {
+    border-radius: 8px;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+body {
+    background-color: #f6f7fb;
+}
+
+.hero-carousel-img {
+    height: 520px;
+    object-fit: cover;
+}
+
+.carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.hero-caption {
+    bottom: 18%;
+    z-index: 2;
+}
+
+.hero-caption h1,
+.hero-caption p {
+    color: #fff;
+}
+
+.hero-mini {
+    background: linear-gradient(135deg, #ffffff, #f1f4f9);
+}
+
+.info-card {
+    background: #ffffff;
+    border: none;
+}
+
+.stats-section {
+    background: #ffffff;
+}
+
+.featured-card {
+    border: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.featured-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.item-img {
+    height: 280px;
+    object-fit: cover;
+}
+
+.carousel,
+.hero-mini,
+.stats-section,
+.info-card,
+.featured-card {
+    border-radius: 18px;
+}
