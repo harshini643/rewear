@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-5">
+        <img src="{{ url_for('static', filename='images/uploads/' + item['image']) }}" class="img-fluid rounded shadow" alt="">
+    </div>
+
+    <div class="col-md-7">
+        <h2>{{ item['title'] }}</h2>
+        <p>{{ item['description'] }}</p>
+
+        <ul class="list-group mb-3">
+            <li class="list-group-item"><strong>Category:</strong> {{ item['category'] }}</li>
+            <li class="list-group-item"><strong>Type:</strong> {{ item['type'] }}</li>
+            <li class="list-group-item"><strong>Size:</strong> {{ item['size'] }}</li>
+            <li class="list-group-item"><strong>Condition:</strong> {{ item['condition'] }}</li>
+            <li class="list-group-item"><strong>Tags:</strong> {{ item['tags'] }}</li>
+            <li class="list-group-item"><strong>Points:</strong> {{ item['points'] }}</li>
+            <li class="list-group-item"><strong>Owner:</strong> {{ item['owner_name'] }}</li>
+            <li class="list-group-item"><strong>Status:</strong> {{ item['status'] }}</li>
+        </ul>
+
+        {% if session_user_id and item['owner_id'] != session_user_id and item['status'] == 'available' and item['approved'] == 1 %}
+        <div class="mb-3">
+            <form method="POST" action="{{ url_for('request_swap', item_id=item['id']) }}" class="mb-3">
+                <label class="form-label"><strong>Offer one of your items for swap</strong></label>
+                <select name="offered_item_id" class="form-control mb-2">
+                    <option value="">No item offered</option>
+                    {% for my_item in my_items %}
+                        <option value="{{ my_item['id'] }}">{{ my_item['title'] }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Send Swap Request</button>
+            </form>
+
+            <form method="POST" action="{{ url_for('redeem_item', item_id=item['id']) }}">
+                <button type="submit" class="btn btn-success">Redeem via Points</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<hr class="my-5">
+
+<h3>Recommended Similar Items</h3>
+<div class="row">
+    {% for rec in recommended_items %}
+    <div class="col-md-3 mb-4">
+        <div class="card h-100 shadow-sm">
+            <img src="{{ url_for('static', filename='images/uploads/' + rec['image']) }}" class="card-img-top item-img" alt="">
+            <div class="card-body">
+                <h5>{{ rec['title'] }}</h5>
+                <p>{{ rec['category'] }} | {{ rec['type'] }}</p>
+                <p>Size {{ rec['size'] }}</p>
+                <p><strong>{{ rec['points'] }} points</strong></p>
+                <a href="{{ url_for('item_detail', item_id=rec['id']) }}" class="btn btn-outline-dark btn-sm">View</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No recommendations available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

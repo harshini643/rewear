@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">My Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>{{ user['name'] }}</h5>
+                <p>Email: {{ user['email'] }}</p>
+                <p><strong>Points:</strong> {{ user['points'] }}</p>
+                <p><strong>Role:</strong> {{ user['role'] }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4>My Uploaded Items</h4>
+<div class="row">
+    {% for item in my_items %}
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm">
+            <img src="{{ url_for('static', filename='images/uploads/' + item['image']) }}" class="card-img-top item-img" alt="">
+            <div class="card-body">
+                <h5>{{ item['title'] }}</h5>
+                <p>Status: {{ item['status'] }}</p>
+                <p>Approved: {{ 'Yes' if item['approved'] == 1 else 'Pending' }}</p>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No items uploaded yet.</p>
+    {% endfor %}
+</div>
+
+<hr>
+
+<h4>My Swap Requests</h4>
+<div class="table-responsive mb-4">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Requested Item</th>
+                <th>Offered Item</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for swap in my_swaps %}
+            <tr>
+                <td>{{ swap['requested_item_title'] }}</td>
+                <td>{{ swap['offered_item_title'] if swap['offered_item_title'] else 'No item offered' }}</td>
+                <td>{{ swap['status'] }}</td>
+                <td>
+                    {% if swap['owner_id'] == session_user_id and swap['status'] == 'pending' %}
+                        <a href="{{ url_for('swap_action', swap_id=swap['id'], action='accept') }}" class="btn btn-success btn-sm">Accept</a>
+                        <a href="{{ url_for('swap_action', swap_id=swap['id'], action='reject') }}" class="btn btn-danger btn-sm">Reject</a>
+                    {% elif swap['owner_id'] == session_user_id and swap['status'] == 'accepted' %}
+                        <a href="{{ url_for('swap_action', swap_id=swap['id'], action='complete') }}" class="btn btn-warning btn-sm">Mark Complete</a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4">No swap records yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<hr>
+
+<h4>Redeemed Items History</h4>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Points Used</th>
+                <th>Redeemed On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in redemptions %}
+            <tr>
+                <td>{{ r['title'] }}</td>
+                <td>{{ r['points_used'] }}</td>
+                <td>{{ r['redeemed_on'] }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No redemption history yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
